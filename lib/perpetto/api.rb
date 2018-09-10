@@ -34,13 +34,25 @@ module Perpetto
       post('backend_track/items_updated', {items: {item_id => item_hash}})
     end
 
+    def profile_info(email)
+      get("info/profile", {email: email})
+    end
+
+    def delete_store_data
+      post('backend_action/delete_domain')
+    end
+
+    def delete_profile_data(email)
+      post('backend_action/delete_profile', {email: email})
+    end
+
     private
-    def get(path)
-      response = HTTParty.get(api_url(path))
+    def get(path, params = {})
+      response = HTTParty.get(api_url(path, params))
       decode_and_check_response(response)
     end
 
-    def post(path, body)
+    def post(path, body = {})
       response = HTTParty.post(api_url(path), body: body.to_json, headers: {'Content-Type' => 'application/json' })
       decode_and_check_response(response)
     end
@@ -53,8 +65,10 @@ module Perpetto
     end
 
     private
-    def api_url(path)
-      "https://#{@account_id}.api.perpetto.com/v3/#{path}?secret=#{@secret}"
+    def api_url(path, params = {})
+      uri = URI("https://#{@account_id}.api.perpetto.com/v3/#{path}")
+      uri.query = URI.encode_www_form(params.merge(secret: @secret))
+      uri.to_s
     end
   end
 end
