@@ -60,7 +60,7 @@ module Perpetto
     def decode_and_check_response(response)
       response_hash = JSON.parse(response.body)
       puts "Perpetto response: #{response_hash}"
-      raise "Perpetto API returned error: #{response_hash['data']['error']}" if response_hash['data']['status'] == 'error'
+      raise "Perpetto API returned error: #{response_hash['error']}" if response_hash['status'] == 'error'
       response_hash['data']
     end
 

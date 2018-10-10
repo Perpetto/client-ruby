@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name = %q{perpetto}
   s.authors     = ["Yavor Stoychev"]
   s.email       = 'yavor@perpetto.com'
-  s.version = '0.0.5'
+  s.version = '0.0.6'
   s.date = %q{2018-09-10}
   s.summary = %q{API client for Perpetto}
   s.files = [
